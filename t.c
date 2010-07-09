@@ -254,7 +254,7 @@ int main(int argc,char* argv[]) {
   buffer_putsflush(buffer_1,"\n");
 //  buffer_flush(buffer_1);
 #endif
-#if 0
+#if 1
   long a,b,c;
   char buf[4096];
   char buf2[4096];
@@ -266,6 +266,47 @@ int main(int argc,char* argv[]) {
   byte_copy(buf,4096,buf2);
   rdtscl(c);
   printf("memcpy: %d - byte_copy: %d\n",b-a,c-b);
+
+  memset(buf,0, 4096);
+  byte_zero(buf,4096);
+  rdtscl(a);
+  memset(buf,0, 4096);
+  rdtscl(b);
+  byte_zero(buf,4096);
+  rdtscl(c);
+  printf("memset: %d - byte_zero: %d\n",b-a,c-b);
+
+  memcmp(buf,buf2,4096);
+  byte_equal(buf,4096,buf2);
+  rdtscl(a);
+  memcmp(buf,buf2,4096);
+  rdtscl(b);
+  byte_equal(buf,4096,buf2);
+  rdtscl(c);
+  printf("memcmp: %d - byte_equal: %d\n",b-a,c-b);
+
+  buf[4095] = 0;
+
+  strcpy(buf2,buf);
+  str_copy(buf2,buf);
+  rdtscl(a);
+  strcpy(buf2,buf);
+  rdtscl(b);
+  str_copy(buf2,buf);
+  rdtscl(c);
+  printf("strcpy: %d - str_copy: %d\n",b-a,c-b);
+
+  strlen(buf2);
+  str_len(buf2);
+  rdtscl(a);
+  strlen(buf2);
+  rdtscl(b);
+  str_len(buf2);
+  rdtscl(c);
+  printf("strlen: %d - str_len: %d\n",b-a,c-b);
+
+
+
 #endif
 #if 0
   char ip[16];
