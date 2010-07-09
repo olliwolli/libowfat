@@ -1,5 +1,5 @@
 #include "byte.h"
-
+#ifndef PREFER_MEM_FUNCTIONS
 /* byte_zero sets the bytes out[0], out[1], ..., out[len-1] to 0 */
 void byte_zero(void* out, size_t len) {
 #if 1
@@ -20,3 +20,4 @@ void byte_zero(void* out, size_t len) {
   }
 #endif
 }
+#endif

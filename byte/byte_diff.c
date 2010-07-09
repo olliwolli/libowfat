@@ -1,5 +1,5 @@
 #include "byte.h"
-
+#ifndef PREFER_MEM_FUNCTIONS
 /* byte_diff returns negative, 0, or positive, depending on whether the
  * string one[0], one[1], ..., one[len-1] is lexicographically smaller
  * than, equal to, or greater than the string one[0], one[1], ...,
@@ -29,3 +29,4 @@ int byte_diff(const void* a, size_t len, const void* b) {
   return 0;
 #endif
 }
+#endif
