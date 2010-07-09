@@ -11,9 +11,9 @@ MAN3DIR=${prefix}/man/man3
 
 LIBS=byte.a fmt.a scan.a str.a uint.a open.a stralloc.a unix.a socket.a \
 buffer.a mmap.a taia.a tai.a dns.a case.a mult.a array.a io.a \
-textcode.a cdb.a
+textcode.a cdb.a cal.a
 
-all: $(LIBS) libowfat.a libsocket t
+all: $(LIBS) libowfat.a libsocket t 
 
 CROSS=
 #CROSS=i686-mingw-
@@ -54,7 +54,7 @@ endif
 # to build without diet libc support, use $ make DIET=
 # see http://www.fefe.de/dietlibc/ for details about the diet libc
 
-VPATH=str:byte:fmt:scan:uint:open:stralloc:unix:socket:buffer:mmap:textcode:taia:tai:dns:case:array:mult:io:cdb
+VPATH=str:byte:fmt:scan:uint:open:stralloc:unix:socket:buffer:mmap:textcode:taia:tai:cal:dns:case:array:mult:io:cdb
 
 BYTE_OBJS=$(patsubst byte/%.c,%.o,$(wildcard byte/*.c))
 FMT_OBJS=$(patsubst fmt/%.c,%.o,$(wildcard fmt/*.c))
@@ -70,6 +70,7 @@ MMAP_OBJS=$(patsubst mmap/%.c,%.o,$(wildcard mmap/*.c))
 TEXTCODE_OBJS=$(patsubst textcode/%.c,%.o,$(wildcard textcode/*.c))
 TAI_OBJS=$(patsubst tai/%.c,%.o,$(wildcard tai/*.c))
 TAIA_OBJS=$(patsubst taia/%.c,%.o,$(wildcard taia/*.c))
+CAL_OBJS=$(patsubst cal/%.c,%.o,$(wildcard cal/*.c))
 DNS_OBJS=$(patsubst dns/%.c,%.o,$(wildcard dns/*.c))
 CASE_OBJS=$(patsubst case/%.c,%.o,$(wildcard case/*.c))
 ARRAY_OBJS=$(patsubst array/%.c,%.o,$(wildcard array/*.c))
@@ -89,6 +90,7 @@ $(MMAP_OBJS): mmap.h open.h
 $(TEXTCODE_OBJS): textcode.h
 $(TAI_OBJS): tai.h uint64.h
 $(TAIA_OBJS): taia.h tai.h uint64.h
+$(CAL_OBJS): leapsecs.h caldate.h caltime.h taia.h tai.h uint64.h
 $(DNS_OBJS): dns.h stralloc.h taia.h tai.h uint64.h iopause.h
 $(CASE_OBJS): case.h
 $(ARRAY_OBJS): uint64.h array.h
@@ -121,6 +123,7 @@ mmap.a: $(MMAP_OBJS)
 textcode.a: $(TEXTCODE_OBJS)
 taia.a: $(TAIA_OBJS)
 tai.a: $(TAI_OBJS)
+cal.a: $(CAL_OBJS)
 dns.a: $(DNS_OBJS)
 case.a: $(CASE_OBJS)
 array.a: $(ARRAY_OBJS)
@@ -132,7 +135,7 @@ ALL_OBJS=$(DNS_OBJS) $(BYTE_OBJS) $(FMT_OBJS) $(SCAN_OBJS) \
 $(STR_OBJS) $(UINT_OBJS) $(OPEN_OBJS) $(STRALLOC_OBJS) $(UNIX_OBJS) \
 $(SOCKET_OBJS) $(BUFFER_OBJS) $(MMAP_OBJS) $(TEXTCODE_OBJS) \
 $(TAIA_OBJS) $(TAI_OBJS) $(CASE_OBJS) $(ARRAY_OBJS) $(MULT_OBJS) \
-$(IO_OBJS) $(CDB_OBJS)
+$(IO_OBJS) $(CDB_OBJS) $(CAL_OBJS)
 
 libowfat.a: $(ALL_OBJS)
 	$(CROSS)ar cr $@ $(ALL_OBJS)
@@ -164,7 +167,7 @@ libepoll havesigio.h havebsdsf.h havesendfile.h havescope.h havedevpoll.h \
 dep libsocket havealloca.h
 
 INCLUDES=buffer.h byte.h fmt.h ip4.h ip6.h mmap.h scan.h socket.h str.h stralloc.h \
-uint16.h uint32.h uint64.h open.h textcode.h tai.h taia.h dns.h iopause.h case.h \
+uint16.h uint32.h uint64.h open.h textcode.h caldate.h caltime.h leapsecs.h tai.h taia.h dns.h iopause.h case.h \
 openreadclose.h readclose.h ndelay.h array.h io.h safemult.h iob.h havealloca.h \
 errmsg.h cdb.h cdb_make.h rangecheck.h iarray.h
 
