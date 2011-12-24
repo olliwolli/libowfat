@@ -1,3 +1,8 @@
+vanilla libowfat with following additions:
+	- caldate.h and caltime.h
+	- some performace tests and options
+
+-- Original README --
 libowfat is a library of general purpose APIs extracted from Dan
 Bernstein's software, reimplemented and covered by the GNU General
 Public License Version 2 (no later versions).
